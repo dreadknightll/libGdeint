@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "outFile": "bin/libGdeint.js",
+        "declaration": true
+    },
+    "include": [
+        "src/**/**.ts",
+        "src/classes/**/**.ts"
+    ]
+}

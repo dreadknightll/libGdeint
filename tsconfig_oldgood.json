@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "outFile": "bin/libGdeint.js",
+        "declaration": true
+    },
+    "files": [
+        "src/structs/CPoint.ts",
+        "src/structs/CRect.ts",
+        "src/structs/CPraElemBase.ts",
+        "src/structs/CPreloadTask.ts",
+        "src/funcs/funcs_eint1.ts"
+    ]
+}
