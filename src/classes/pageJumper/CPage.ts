@@ -3,12 +3,19 @@ namespace gdeint {
 		public constructor() {
 		}
 
-		public show():void {
+		public showOnFront():void {
+			this.onShownOnFront();
+		}
 
+		public show():void {
 		}
 
 		public hide():void {
 
+		}
+
+		public onShownOnFront():void {
+	//		window.alert("super.onPageShow");
 		}
 
 		public isVisible():boolean {

@@ -1,5 +1,5 @@
 /*
- *  /src/components/ImgThumbModelV2.ts
+ *  /src/classes/imgThumbModel/ImgThumbModelV2.ts
  * 
  * 图形与缩略图转换器。用于处理缩略图尺寸计算、原图与缩略图坐标映射等。
  * 注：本类仅用于计算，切勿用于存储数据。

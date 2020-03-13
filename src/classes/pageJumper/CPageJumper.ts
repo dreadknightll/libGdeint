@@ -1,6 +1,6 @@
 namespace gdeint {
-
 	export class CPageJumper implements IPageJumper {
+		//不调用gotoPage，则页面显示状态维持原状。
 		public constructor() {
 			this.m_pages = {};
 			this.m_curState = 0;
@@ -18,13 +18,14 @@ namespace gdeint {
 			return false;
 		}
 
-		public gotoPage(pageName:string,readyListener:Function):void {
+		public gotoPage(pageName:string,readyListener:Function/*Not used*/):void {
 			this.m_targetPage = pageName;
-			var curPage:CPage;
+
+			var curPage:IPage;
 			curPage = this.m_pages[pageName];
 
 	//		if(curPage.isReady()) {
-				curPage.show();
+				curPage.showOnFront();
 
 	//	Hide other pages:
 				for(var tmpKey in this.m_pages) {
@@ -50,7 +51,7 @@ namespace gdeint {
 			return this.m_curState;
 		}
 
-		public m_pages:any; // Type:Map
+		public m_pages:any; // Type:Map<IPage>
 		public m_targetPage:string;
 		public m_curState:number;
 	}

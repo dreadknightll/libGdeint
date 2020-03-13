@@ -6,9 +6,15 @@ var gdeint;
     var CPage = (function () {
         function CPage() {
         }
+        CPage.prototype.showOnFront = function () {
+            this.onShownOnFront();
+        };
         CPage.prototype.show = function () {
         };
         CPage.prototype.hide = function () {
+        };
+        CPage.prototype.onShownOnFront = function () {
+            //		window.alert("super.onPageShow");
         };
         CPage.prototype.isVisible = function () {
             return true;
@@ -21,6 +27,7 @@ var gdeint;
 var gdeint;
 (function (gdeint) {
     var CPageJumper = (function () {
+        //不调用gotoPage，则页面显示状态维持原状。
         function CPageJumper() {
             this.m_pages = {};
             this.m_curState = 0;
@@ -34,12 +41,12 @@ var gdeint;
         CPageJumper.prototype.isPageReady = function (pageName) {
             return false;
         };
-        CPageJumper.prototype.gotoPage = function (pageName, readyListener) {
+        CPageJumper.prototype.gotoPage = function (pageName, readyListener /*Not used*/) {
             this.m_targetPage = pageName;
             var curPage;
             curPage = this.m_pages[pageName];
             //		if(curPage.isReady()) {
-            curPage.show();
+            curPage.showOnFront();
             //	Hide other pages:
             for (var tmpKey in this.m_pages) {
                 if (tmpKey != pageName) {
@@ -92,7 +99,7 @@ var gdeint;
     })(EintParsers = gdeint.EintParsers || (gdeint.EintParsers = {}));
 })(gdeint || (gdeint = {}));
 /*
- *  /src/components/ImgThumbModelV2.ts
+ *  /src/classes/imgThumbModel/ImgThumbModelV2.ts
  *
  * 图形与缩略图转换器。用于处理缩略图尺寸计算、原图与缩略图坐标映射等。
  * 注：本类仅用于计算，切勿用于存储数据。

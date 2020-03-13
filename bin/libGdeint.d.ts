@@ -18,8 +18,10 @@ declare namespace gdeint {
 declare namespace gdeint {
     class CPage implements IPage {
         constructor();
+        showOnFront(): void;
         show(): void;
         hide(): void;
+        onShownOnFront(): void;
         isVisible(): boolean;
     }
 }
@@ -38,6 +40,8 @@ declare namespace gdeint {
 }
 declare namespace gdeint {
     interface IPage extends IHidable {
+        showOnFront(): void;
+        onShownOnFront(): void;
     }
 }
 declare namespace gdeint {
