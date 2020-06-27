@@ -433,7 +433,23 @@ var gdeint;
     }
     gdeint.objectValues = objectValues;
     function seconds2MinSec(secs) {
-        return "SSS";
+        var ret;
+        var minPart = Math.floor(secs / 60);
+        var secPart = secs % 60;
+        if (minPart < 10) {
+            ret = "0" + minPart;
+        }
+        else {
+            ret = "" + minPart;
+        }
+        ret += ":";
+        if (secPart < 10) {
+            ret += ("0" + secPart);
+        }
+        else {
+            ret += ("" + secPart);
+        }
+        return ret;
     }
     gdeint.seconds2MinSec = seconds2MinSec;
 })(gdeint || (gdeint = {}));

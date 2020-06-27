@@ -134,6 +134,26 @@ namespace gdeint {
     }
 
     export function seconds2MinSec(secs:number) {
-        return "SSS";
+        var ret:string;
+        var minPart:number = Math.floor(secs/60);
+        var secPart:number = secs%60;
+
+        if(minPart<10) {
+            ret = "0"+minPart;
+        }
+        else {
+            ret = ""+minPart;
+        }
+
+        ret += ":";
+
+        if(secPart<10) {
+            ret += ("0"+secPart);
+        }
+        else {
+            ret += (""+secPart);
+        }
+
+        return ret;
     }
 }
