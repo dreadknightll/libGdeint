@@ -13,5 +13,9 @@ namespace gdeint {
 
     	public constructor() {
 	    }
+
+        public toNumArr():Array<number> {
+            return [this.m_x , this.m_y];
+        }
     }
 }

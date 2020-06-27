@@ -1,11 +1,26 @@
 declare namespace gdeint {
-    interface IRenderFilter {
-        xOConv(x: number): number;
-        xIConv(x: number): number;
-        yOConv(y: number): number;
-        yIConv(y: number): number;
-        ptOConv(pt: gdeint.CPoint): gdeint.CPoint;
-        ptIConv(pt: gdeint.CPoint): gdeint.CPoint;
+    interface IRectRenderFilter extends IRenderFilter {
+        rectOConv(rect: gdeint.CRect): gdeint.CRect;
+        rectIConv(rect: gdeint.CRect): gdeint.CRect;
+    }
+}
+declare namespace gdeint {
+    class CSquareCircler implements ICircler {
+        private m_circlerRect;
+        private m_itemRect;
+        private m_pullGapHor;
+        private m_pullGapVer;
+        private m_pushGapHor;
+        private m_pushGapVer;
+        constructor();
+        setInpPos(p: CPoint): void;
+        getOutpPos(): CPoint;
+        setCirclerRect(r: CRect): void;
+        setPullGapHor(pgh: number): void;
+        setPullGapVer(pgv: number): void;
+        setPushGapHor(val: number): void;
+        setPushGapVer(val: number): void;
+        setItemRect(r: CRect): void;
     }
 }
 declare namespace gdeint {
@@ -13,6 +28,28 @@ declare namespace gdeint {
         show(): void;
         hide(): void;
         isVisible(): boolean;
+    }
+}
+declare namespace gdeint {
+    class ImgThumbModelV2 {
+        private m_thMaxWidth;
+        private m_thMaxHeight;
+        private m_imgWidth;
+        private m_imgHeight;
+        private m_imgSelRect;
+        constructor();
+        getRat(): number;
+        setThMaxWidth(thMaxWidth: any): void;
+        setThMaxHeight(thMaxHeight: any): void;
+        getThWidth(): number;
+        getThHeight(): number;
+        getThSelRect(): gdeint.CRect;
+        setImgWidth(imgWidth: any): void;
+        setImgHeight(imgHeight: any): void;
+        getImgSelRect(): gdeint.CRect;
+        setImgSelRect(imgSelRect: any): void;
+        ip2Tp(ip: any): gdeint.CPoint;
+        tp2Ip(tp: any): gdeint.CPoint;
     }
 }
 declare namespace gdeint {
@@ -64,31 +101,19 @@ declare namespace gdeint {
     }
 }
 declare namespace gdeint {
-    interface IRectRenderFilter extends IRenderFilter {
-        rectOConv(rect: gdeint.CRect): gdeint.CRect;
-        rectIConv(rect: gdeint.CRect): gdeint.CRect;
+    interface ICircler {
+        setInpPos(p: CPoint): void;
+        getOutpPos(): CPoint;
     }
 }
 declare namespace gdeint {
-    class ImgThumbModelV2 {
-        private m_thMaxWidth;
-        private m_thMaxHeight;
-        private m_imgWidth;
-        private m_imgHeight;
-        private m_imgSelRect;
-        constructor();
-        getRat(): number;
-        setThMaxWidth(thMaxWidth: any): void;
-        setThMaxHeight(thMaxHeight: any): void;
-        getThWidth(): number;
-        getThHeight(): number;
-        getThSelRect(): gdeint.CRect;
-        setImgWidth(imgWidth: any): void;
-        setImgHeight(imgHeight: any): void;
-        getImgSelRect(): gdeint.CRect;
-        setImgSelRect(imgSelRect: any): void;
-        ip2Tp(ip: any): gdeint.CPoint;
-        tp2Ip(tp: any): gdeint.CPoint;
+    interface IRenderFilter {
+        xOConv(x: number): number;
+        xIConv(x: number): number;
+        yOConv(y: number): number;
+        yIConv(y: number): number;
+        ptOConv(pt: gdeint.CPoint): gdeint.CPoint;
+        ptIConv(pt: gdeint.CPoint): gdeint.CPoint;
     }
 }
 declare namespace gdeint {
@@ -131,6 +156,7 @@ declare namespace gdeint {
     function tailContain(str1: any, str2: any): boolean;
     function objectSize(the_object: any): number;
     function objectValues(the_object: any): string;
+    function seconds2MinSec(secs: number): string;
 }
 declare namespace gdeint {
     /**
@@ -142,6 +168,7 @@ declare namespace gdeint {
         m_x: number;
         m_y: number;
         constructor();
+        toNumArr(): Array<number>;
     }
 }
 /**

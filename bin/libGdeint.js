@@ -3,100 +3,52 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var gdeint;
 (function (gdeint) {
-    var CPage = (function () {
-        function CPage() {
+    var CSquareCircler = (function () {
+        function CSquareCircler() {
         }
-        CPage.prototype.showOnFront = function () {
-            this.onShownOnFront();
+        CSquareCircler.prototype.setInpPos = function (p) {
+            this.m_itemRect.m_left = p.m_x;
+            this.m_itemRect.m_top = p.m_y;
         };
-        CPage.prototype.show = function () {
-        };
-        CPage.prototype.hide = function () {
-        };
-        CPage.prototype.onShownOnFront = function () {
-            //		window.alert("super.onPageShow");
-        };
-        CPage.prototype.isVisible = function () {
-            return true;
-        };
-        return CPage;
-    }());
-    gdeint.CPage = CPage;
-    __reflect(CPage.prototype, "gdeint.CPage", ["gdeint.IPage", "gdeint.IHidable"]);
-})(gdeint || (gdeint = {}));
-var gdeint;
-(function (gdeint) {
-    var CPageJumper = (function () {
-        //不调用gotoPage，则页面显示状态维持原状。
-        function CPageJumper() {
-            this.m_pages = {};
-            this.m_curState = 0;
-        }
-        CPageJumper.prototype.setPage = function (pageName, page) {
-            this.m_pages[pageName] = page;
-        };
-        CPageJumper.prototype.getPage = function (pageName) {
-            return this.m_pages[pageName];
-        };
-        CPageJumper.prototype.isPageReady = function (pageName) {
-            return false;
-        };
-        CPageJumper.prototype.gotoPage = function (pageName, readyListener /*Not used*/) {
-            this.m_targetPage = pageName;
-            var curPage;
-            curPage = this.m_pages[pageName];
-            //		if(curPage.isReady()) {
-            curPage.showOnFront();
-            //	Hide other pages:
-            for (var tmpKey in this.m_pages) {
-                if (tmpKey != pageName) {
-                    if (undefined != this.m_pages[tmpKey]) {
-                        this.m_pages[tmpKey].hide();
-                    }
-                }
+        CSquareCircler.prototype.getOutpPos = function () {
+            var ret = new gdeint.CPoint();
+            if (this.m_itemRect.m_left > this.m_circlerRect.m_left + this.m_pullGapHor) {
+                ret.m_x = this.m_circlerRect.m_left + this.m_pullGapHor;
             }
-            //		}
-            //		else {
-            //			add to action queue.
-            //		}
-        };
-        /*	pubilc onPageLoadReady(pageName:string):void {
-                pageName
-            }*/
-        CPageJumper.prototype.getState = function () {
-            //1、Idle state 2、Jumping state(Target set and waiting to jump)
-            return this.m_curState;
-        };
-        return CPageJumper;
-    }());
-    gdeint.CPageJumper = CPageJumper;
-    __reflect(CPageJumper.prototype, "gdeint.CPageJumper", ["gdeint.IPageJumper"]);
-})(gdeint || (gdeint = {}));
-var gdeint;
-(function (gdeint) {
-    /**
-     *  /src/components/EintParsers.ts
-     * 聚集了自己写的解析器。
-     */
-    var EintParsers;
-    (function (EintParsers) {
-        var CaRatParser = (function () {
-            function CaRatParser() {
+            if (this.m_itemRect.m_left + this.m_itemRect.m_width <
+                this.m_circlerRect.m_left + this.m_circlerRect.m_width - this.m_pullGapHor) {
+                ret.m_x = this.m_circlerRect.m_left + this.m_circlerRect.m_width - this.m_pullGapHor - this.m_itemRect.m_width;
             }
-            CaRatParser.parseFloat = function (str) {
-                //  Least result: 0.001
-                var ret;
-                ret = parseFloat(str);
-                if (isNaN(ret) || ret < 0.001) {
-                    ret = 0.001;
-                }
-                return ret;
-            };
-            return CaRatParser;
-        }());
-        EintParsers.CaRatParser = CaRatParser;
-        __reflect(CaRatParser.prototype, "gdeint.EintParsers.CaRatParser");
-    })(EintParsers = gdeint.EintParsers || (gdeint.EintParsers = {}));
+            if (this.m_itemRect.m_top > this.m_circlerRect.m_top + this.m_pullGapHor) {
+                ret.m_y = this.m_circlerRect.m_top + this.m_pullGapHor;
+            }
+            else if (this.m_itemRect.m_top + this.m_itemRect.m_height < this.m_circlerRect.m_top + this.m_circlerRect.m_height - this.m_pullGapVer) {
+                ret.m_y = this.m_circlerRect.m_top + this.m_circlerRect.m_height - this.m_pullGapVer - this.m_itemRect.m_height;
+            }
+            return ret;
+        };
+        CSquareCircler.prototype.setCirclerRect = function (r) {
+            this.m_circlerRect = r;
+        };
+        CSquareCircler.prototype.setPullGapHor = function (pgh) {
+            this.m_pullGapHor = pgh;
+        };
+        CSquareCircler.prototype.setPullGapVer = function (pgv) {
+            this.m_pullGapVer = pgv;
+        };
+        CSquareCircler.prototype.setPushGapHor = function (val) {
+            this.m_pushGapHor = val;
+        };
+        CSquareCircler.prototype.setPushGapVer = function (val) {
+            this.m_pushGapVer = val;
+        };
+        CSquareCircler.prototype.setItemRect = function (r) {
+            this.m_itemRect = r;
+        };
+        return CSquareCircler;
+    }());
+    gdeint.CSquareCircler = CSquareCircler;
+    __reflect(CSquareCircler.prototype, "gdeint.CSquareCircler", ["gdeint.ICircler"]);
 })(gdeint || (gdeint = {}));
 /*
  *  /src/classes/imgThumbModel/ImgThumbModelV2.ts
@@ -206,6 +158,103 @@ var gdeint;
     }());
     gdeint.ImgThumbModelV2 = ImgThumbModelV2;
     __reflect(ImgThumbModelV2.prototype, "gdeint.ImgThumbModelV2");
+})(gdeint || (gdeint = {}));
+var gdeint;
+(function (gdeint) {
+    var CPage = (function () {
+        function CPage() {
+        }
+        CPage.prototype.showOnFront = function () {
+            this.onShownOnFront();
+        };
+        CPage.prototype.show = function () {
+        };
+        CPage.prototype.hide = function () {
+        };
+        CPage.prototype.onShownOnFront = function () {
+            //		window.alert("super.onPageShow");
+        };
+        CPage.prototype.isVisible = function () {
+            return true;
+        };
+        return CPage;
+    }());
+    gdeint.CPage = CPage;
+    __reflect(CPage.prototype, "gdeint.CPage", ["gdeint.IPage", "gdeint.IHidable"]);
+})(gdeint || (gdeint = {}));
+var gdeint;
+(function (gdeint) {
+    var CPageJumper = (function () {
+        //不调用gotoPage，则页面显示状态维持原状。
+        function CPageJumper() {
+            this.m_pages = {};
+            this.m_curState = 0;
+        }
+        CPageJumper.prototype.setPage = function (pageName, page) {
+            this.m_pages[pageName] = page;
+        };
+        CPageJumper.prototype.getPage = function (pageName) {
+            return this.m_pages[pageName];
+        };
+        CPageJumper.prototype.isPageReady = function (pageName) {
+            return false;
+        };
+        CPageJumper.prototype.gotoPage = function (pageName, readyListener /*Not used*/) {
+            this.m_targetPage = pageName;
+            var curPage;
+            curPage = this.m_pages[pageName];
+            //		if(curPage.isReady()) {
+            curPage.showOnFront();
+            //	Hide other pages:
+            for (var tmpKey in this.m_pages) {
+                if (tmpKey != pageName) {
+                    if (undefined != this.m_pages[tmpKey]) {
+                        this.m_pages[tmpKey].hide();
+                    }
+                }
+            }
+            //		}
+            //		else {
+            //			add to action queue.
+            //		}
+        };
+        /*	pubilc onPageLoadReady(pageName:string):void {
+                pageName
+            }*/
+        CPageJumper.prototype.getState = function () {
+            //1、Idle state 2、Jumping state(Target set and waiting to jump)
+            return this.m_curState;
+        };
+        return CPageJumper;
+    }());
+    gdeint.CPageJumper = CPageJumper;
+    __reflect(CPageJumper.prototype, "gdeint.CPageJumper", ["gdeint.IPageJumper"]);
+})(gdeint || (gdeint = {}));
+var gdeint;
+(function (gdeint) {
+    /**
+     *  /src/components/EintParsers.ts
+     * 聚集了自己写的解析器。
+     */
+    var EintParsers;
+    (function (EintParsers) {
+        var CaRatParser = (function () {
+            function CaRatParser() {
+            }
+            CaRatParser.parseFloat = function (str) {
+                //  Least result: 0.001
+                var ret;
+                ret = parseFloat(str);
+                if (isNaN(ret) || ret < 0.001) {
+                    ret = 0.001;
+                }
+                return ret;
+            };
+            return CaRatParser;
+        }());
+        EintParsers.CaRatParser = CaRatParser;
+        __reflect(CaRatParser.prototype, "gdeint.EintParsers.CaRatParser");
+    })(EintParsers = gdeint.EintParsers || (gdeint.EintParsers = {}));
 })(gdeint || (gdeint = {}));
 var gdeint;
 (function (gdeint) {
@@ -356,8 +405,8 @@ var gdeint;
         return fmt;
     };
     /*
-     * 函数杂烩（通用函数）。
-     */
+    * 函数杂烩（通用函数）。
+    */
     function objectSize(the_object) {
         /* function to validate the existence of each key in the object to get the number of valid keys. */
         var object_size = 0;
@@ -383,6 +432,10 @@ var gdeint;
         return ret;
     }
     gdeint.objectValues = objectValues;
+    function seconds2MinSec(secs) {
+        return "SSS";
+    }
+    gdeint.seconds2MinSec = seconds2MinSec;
 })(gdeint || (gdeint = {}));
 var gdeint;
 (function (gdeint) {
@@ -394,6 +447,9 @@ var gdeint;
     var CPoint = (function () {
         function CPoint() {
         }
+        CPoint.prototype.toNumArr = function () {
+            return [this.m_x, this.m_y];
+        };
         return CPoint;
     }());
     gdeint.CPoint = CPoint;
