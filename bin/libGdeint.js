@@ -5,6 +5,10 @@ var gdeint;
 (function (gdeint) {
     var CSquareCircler = (function () {
         function CSquareCircler() {
+            this.m_pullGapHor = 0;
+            this.m_pullGapVer = 0;
+            this.m_pushGapHor = 0;
+            this.m_pushGapVer = 0;
         }
         CSquareCircler.prototype.setInpPos = function (p) {
             this.m_itemRect.m_left = p.m_x;
@@ -12,18 +16,52 @@ var gdeint;
         };
         CSquareCircler.prototype.getOutpPos = function () {
             var ret = new gdeint.CPoint();
-            if (this.m_itemRect.m_left > this.m_circlerRect.m_left + this.m_pullGapHor) {
-                ret.m_x = this.m_circlerRect.m_left + this.m_pullGapHor;
+            if (this.m_itemRect.m_width > this.m_circlerRect.m_width) {
+                if (this.m_itemRect.m_left > this.m_circlerRect.m_left + this.m_pullGapHor) {
+                    ret.m_x = this.m_circlerRect.m_left + this.m_pullGapHor;
+                }
+                else if (this.m_itemRect.m_left + this.m_itemRect.m_width <
+                    this.m_circlerRect.m_left + this.m_circlerRect.m_width - this.m_pullGapHor) {
+                    ret.m_x = this.m_circlerRect.m_left + this.m_circlerRect.m_width - this.m_pullGapHor - this.m_itemRect.m_width;
+                }
+                else {
+                    ret.m_x = this.m_itemRect.m_left;
+                }
             }
-            if (this.m_itemRect.m_left + this.m_itemRect.m_width <
-                this.m_circlerRect.m_left + this.m_circlerRect.m_width - this.m_pullGapHor) {
-                ret.m_x = this.m_circlerRect.m_left + this.m_circlerRect.m_width - this.m_pullGapHor - this.m_itemRect.m_width;
+            else {
+                if (this.m_itemRect.m_left < this.m_circlerRect.m_left - this.m_pushGapHor) {
+                    ret.m_x = this.m_circlerRect.m_left - this.m_pushGapHor;
+                }
+                else if (this.m_itemRect.m_left + this.m_itemRect.m_width >
+                    this.m_circlerRect.m_left + this.m_circlerRect.m_width + this.m_pushGapHor) {
+                    ret.m_x = this.m_circlerRect.m_left + this.m_circlerRect.m_width + this.m_pushGapHor - this.m_itemRect.m_width;
+                }
+                else {
+                    ret.m_x = this.m_itemRect.m_left;
+                }
             }
-            if (this.m_itemRect.m_top > this.m_circlerRect.m_top + this.m_pullGapHor) {
-                ret.m_y = this.m_circlerRect.m_top + this.m_pullGapHor;
+            if (this.m_itemRect.m_height > this.m_circlerRect.m_height) {
+                if (this.m_itemRect.m_top > this.m_circlerRect.m_top + this.m_pullGapVer) {
+                    ret.m_y = this.m_circlerRect.m_top + this.m_pullGapVer;
+                }
+                else if (this.m_itemRect.m_top + this.m_itemRect.m_height <
+                    this.m_circlerRect.m_top + this.m_circlerRect.m_height - this.m_pullGapVer) {
+                    ret.m_y = this.m_circlerRect.m_top + this.m_circlerRect.m_height - this.m_pullGapVer - this.m_itemRect.m_height;
+                }
+                else {
+                    ret.m_y = this.m_itemRect.m_top;
+                }
             }
-            else if (this.m_itemRect.m_top + this.m_itemRect.m_height < this.m_circlerRect.m_top + this.m_circlerRect.m_height - this.m_pullGapVer) {
-                ret.m_y = this.m_circlerRect.m_top + this.m_circlerRect.m_height - this.m_pullGapVer - this.m_itemRect.m_height;
+            else {
+                if (this.m_itemRect.m_top < this.m_circlerRect.m_top - this.m_pushGapVer) {
+                    ret.m_y = this.m_circlerRect.m_top - this.m_pushGapVer;
+                }
+                else if (this.m_itemRect.m_top + this.m_itemRect.m_height > this.m_circlerRect.m_top + this.m_circlerRect.m_height + this.m_pushGapVer) {
+                    ret.m_y = this.m_circlerRect.m_top + this.m_circlerRect.m_height + this.m_pushGapVer - this.m_itemRect.m_height;
+                }
+                else {
+                    ret.m_y = this.m_itemRect.m_top;
+                }
             }
             return ret;
         };
